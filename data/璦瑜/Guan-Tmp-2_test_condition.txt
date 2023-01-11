@@ -1,0 +1,4 @@
+humidity: 90%RH
+temperature: 25 degree
+pan: 2.574 g
+sample_weight: 0.202 g

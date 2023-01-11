@@ -1,0 +1,140 @@
+;/*-----------------------------------------------------------------------------
+;Copyright (c) 2000-2003 Sunny Giken Inc. All Rights Reserved.
+;
+;File     : snyusb.inf
+;Function : LAS Driver Install
+;Author   : H.Nakayama
+;Creation : 2003.10.15
+;
+;History  :
+;2003.10.15 -> Ver1.11
+;           -> The inf file was updated.
+;2001.02.09 -> Ver1.10
+;2000.10.05 -> Ver1.00
+;-----------------------------------------------------------------------------*/
+
+
+;/*-----------------------------------------------------------------------------
+;	Version
+;-----------------------------------------------------------------------------*/
+[Version]
+Signature = "$Chicago$"
+Class     = SNYUSB
+ClassGuid = {73765740-9A9F-11d4-9027-0060942C1F3D}
+Provider  = %DeviceProvider%
+DriverVer = 10/15/2003, 1.1.1.0
+
+
+;/*-----------------------------------------------------------------------------
+;	Class Install
+;-----------------------------------------------------------------------------*/
+[ClassInstall32.NTx86]
+AddReg = ClassInstReg
+
+[ClassInstall]
+AddReg = ClassInstReg
+
+[ClassInstReg]
+HKR, ,               , , %ClassDispName%
+HKR, , Icon          , , -20
+HKR, , NoInstallClass, , 1
+
+
+;/*-----------------------------------------------------------------------------
+;	Provider Information / Device ID
+;-----------------------------------------------------------------------------*/
+[Manufacturer]
+%DeviceProvider% = DeviceInfo
+
+[DeviceInfo]
+%DescLAS% = DriverInstall, USB\VID_0bf7&PID_0001
+
+
+;/*-----------------------------------------------------------------------------
+;	Driver Files
+;-----------------------------------------------------------------------------*/
+[SourceDisksNames]
+1 = %DiskName%, , ,
+
+[SourceDisksFiles]
+snyusb.inf = 1,
+snyusb.sys = 1,
+
+[DestinationDirs]
+CopyInf    = 10, inf
+CopyDriver = 10, System32\Drivers
+
+[CopyInf]
+snyusb.inf, , , 2
+
+[CopyDriver]
+snyusb.sys, , , 2
+
+
+;/*-----------------------------------------------------------------------------
+;	Driver Install
+;-----------------------------------------------------------------------------*/
+[DriverInstall.NTx86]
+CopyFiles = CopyInf, CopyDriver
+
+[DriverInstall]
+CopyFiles = CopyInf, CopyDriver
+AddReg    = ServiceInst
+
+
+;/*-----------------------------------------------------------------------------
+;	Service Install
+;-----------------------------------------------------------------------------*/
+[DriverInstall.NTx86.Services]
+AddService = %SrvcName%, 0x00000002, ServiceInst.NTx86
+
+[ServiceInst.NTx86]
+DisplayName    = %SrvcDispName%
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_DEMAND_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %10%\System32\Drivers\snyusb.sys
+
+[ServiceInst]
+HKR, , DevLoader , , *ntkern
+HKR, , NTMPDriver, , snyusb.sys
+
+
+;/*-----------------------------------------------------------------------------
+;	Localization
+;-----------------------------------------------------------------------------*/
+[Strings]
+;// *** Class ***
+ClassDispName = "Sunny Giken USB Device"
+
+;// *** Driver ***
+DiskName       = "SUNNY_LAS"
+DeviceProvider = "Sunny Giken Inc."
+
+;// *** Device ***
+DescLAS = "Sunny Giken USB Driver"
+
+;// *** Service ***
+SrvcName     = "SNYUSB"
+SrvcDispName = "Sunny Giken USB Driver"
+
+;// *** ServiceType ***
+SERVICE_KERNEL_DRIVER = 0x00000001
+
+;// *** StartType ***
+SERVICE_BOOT_START   = 0x00000000
+SERVICE_SYSTEM_START = 0x00000001
+SERVICE_AUTO_START   = 0x00000002
+SERVICE_DEMAND_START = 0x00000003
+SERVICE_DISABLED     = 0x00000004
+
+;// *** ErrorControl ***
+SERVICE_ERROR_IGNORE   = 0x00000000
+SERVICE_ERROR_NORMAL   = 0x00000001
+SERVICE_ERROR_SEVERE   = 0x00000002
+SERVICE_ERROR_CRITICAL = 0x00000003
+
+
+
+
+
