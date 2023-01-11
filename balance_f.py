@@ -1,6 +1,8 @@
 import time
 import serial
 import matplotlib.pyplot as plt
+import datetime
+
 
 # 與設備通訊
 ser = serial.Serial(
@@ -47,9 +49,9 @@ while True:
     countdown(t)
     ser.write('D05\r'.encode('utf-8'))
     out = ser.read(12).decode('utf-8')
-    print(out)
+    print(f"{datetime.datetime.now()} {out}")
     out_new = out.replace(' ','').replace('g','') #移除空格與文字g
-    recorder.write(out_new)
+    recorder.write(f"{datetime.datetime.now()} {out_new}")
     recorder.close()
 
     data.append(float(out_new))
