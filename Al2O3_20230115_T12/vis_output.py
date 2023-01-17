@@ -20,19 +20,21 @@ ax2.set_ylabel('water uptake (wt.%)')
 ax2.tick_params(axis='y', labelcolor=color)
 ax2.set_title('Al2O3 Adsorption Isotherm 20230115-T12')
 
-# plt.savefig('plot.png', dpi=500)
+# plt.savefig('plot.png', dpi=2000)
 
 # plt.savefig('plot.pdf')
 
 # plt.show()
 
 
+
 # save high resolution picture
-from pdf2image import convert_from_path
-images = convert_from_path("plot.pdf",dpi=1000, poppler_path=r'C:\Program Files\poppler-22.12.0\Library\bin')
-for i, image in enumerate(images):
-    fname = 'image'+str(i)+'.png'
-    image.save(fname, "PNG")
+def pdf2image():
+    from pdf2image import convert_from_path
+    images = convert_from_path("plot.pdf",dpi=1000, poppler_path=r'C:\Program Files\poppler-22.12.0\Library\bin')
+    for i, image in enumerate(images):
+        fname = 'image'+str(i)+'.png'
+        image.save(fname, "PNG")
 
 
 
