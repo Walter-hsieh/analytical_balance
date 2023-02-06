@@ -55,7 +55,7 @@ while True:
     recorder.close()
 
     data.append(float(out_new))
-    plt.plot(data, 'b-o')
+    plt.plot(data, marker=".", linestyle="-")
     plt.draw()
     plt.pause(0.0001)
     plt.savefig(filename.replace('txt', 'png'))
