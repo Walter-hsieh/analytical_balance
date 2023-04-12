@@ -40,7 +40,7 @@ print('connection succeeded.')
 # # ---------test ------------------
 
 sample_name = input("Enter the sample name: ")
-t = int(input("Enter time in second: "))
+# t = int(input("Enter time in second: "))
 
 # 倒數時間/模組
 def countdown(t):
@@ -55,7 +55,7 @@ def countdown(t):
 
 # 數據讀取/作圖/儲存
 data = []
-filename = sample_name + '_' +str(t) + '_sec.txt'
+filename = sample_name + '.txt'
 
 with open(filename,'w') as f:
     f.write("program created by Walter!\n")
